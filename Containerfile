@@ -1,12 +1,12 @@
 ###############################################################################
 # PROJECT NAME CONFIGURATION
 ###############################################################################
-# Name: finpilot
+# Name: ultos
 #
 # IMPORTANT: Change "finpilot" above to your desired project name.
 # This name should be used consistently throughout the repository in:
 #   - Justfile: export image_name := env("IMAGE_NAME", "your-name-here")
-#   - README.md: # your-name-here (title)
+#   - README.md: # ultos (title)
 #   - artifacthub-repo.yml: repositoryID: your-name-here
 #   - custom/ujust/README.md: localhost/your-name-here:stable (in bootc switch example)
 #
