@@ -3,7 +3,7 @@
 ## Initial Setup
 
 ### 1. Rename Template
-- [ ] Update `finpilot` to your name in: Containerfile, Justfile, README.md, artifacthub-repo.yml
+- [ ] Update template name to `ultos` in: Containerfile, Justfile, README.md, artifacthub-repo.yml (✓ Done)
 
 ### 2. Enable GitHub Actions
 - [ ] Settings → Actions → General → Enable workflows

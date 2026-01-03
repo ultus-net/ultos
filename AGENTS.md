@@ -1,4 +1,4 @@
-# Copilot Instructions for finpilot bootc Image Template
+# Copilot Instructions for ultos
 
 ## CRITICAL: GitHub API Usage
 
@@ -31,9 +31,9 @@
 
 **When this repository is used as a template, you MUST:**
 
-### 1. Rename ALL instances of `finpilot`
+### 1. Rename ALL instances of template name to your OS name
 
-**Source of truth**: `Containerfile` line 9: `# Name: finpilot`
+**Source of truth**: `Containerfile` line 4: `# Name: ultos`
 
 **Files to update:**
 - `Containerfile` (line 9)
@@ -1104,5 +1104,5 @@ Assisted-by: Claude 3.5 Sonnet via GitHub Copilot
 ---
 
 **Last Updated**: 2025-11-14  
-**Template Version**: finpilot (Enhanced with comprehensive Copilot instructions)  
+**Template Version**: ultos (Based on finpilot template with comprehensive Copilot instructions)  
 **Maintainer**: Universal Blue Community

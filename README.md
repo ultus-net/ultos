@@ -1,26 +1,24 @@
-# finpilot
+# ultos
 
-A template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux. 
+A custom bootc operating system image built on Universal Blue's finpilot template. ultos is based on [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io), using the **multi-stage build architecture** to combine resources from multiple OCI containers for modularity and maintainability.
 
-This template uses the **multi-stage build architecture** from , combining resources from multiple OCI containers for modularity and maintainability. See the [Architecture](#architecture) section below for details.
-
-**Unlike previous templates, you are not modifying Bluefin and making changes.**: You are assembling your own Bluefin in the same exact way that Bluefin, Aurora, and Bluefin LTS are built. This is way more flexible and better for everyone since the image-agnostic and desktop things we love about Bluefin lives in @projectbluefin/common. 
-
- Instead, you create your own OS repository based on this template, allowing full customization while leveraging Bluefin's robust build system and shared components.
+This OS is assembled in the same way that Bluefin, Aurora, and Bluefin LTS are built, leveraging shared components from @projectbluefin/common while providing full customization capabilities.
 
 > Be the one who moves, not the one who is moved.
 
-## Guided Copilot Mode
+## Quick Start
 
-Here are the steps to guide copilot to make your own repo, or just use it like a regular image template.
+### 1. Deploy ultos
 
-1. Click the green "Use this as a template" button and create a new repository
-2. Select your owner, pick a repo name for your OS, and a description
-3. In the "Jumpstart your project with Copilot (optional)" add this, modify to your liking:
-
+Switch to the ultos image:
+```bash
+sudo bootc switch ghcr.io/ultus-net/ultos:stable
+sudo systemctl reboot
 ```
-Use @projectbluefin/finpilot as a template, name the OS the repository name. Ensure the entire operating system is bootstrapped. Ensure all github actions are enabled and running.  Ensure the README has the github setup instructions for cosign and the other steps required to finish the task.
-```
+
+### 2. Customize Your Image (For Developers)
+
+If you want to customize ultos, you can fork this repository and make changes.
 
 ## What's Included
 
@@ -59,36 +57,19 @@ Use @projectbluefin/finpilot as a template, name the OS the repository name. Ens
 - Helper functions for safe COPR usage
 - See [build/README.md](build/README.md) for details
 
-## Quick Start
+## For Developers: Forking and Customizing
 
-### 1. Create Your Repository
+If you want to create your own custom OS based on ultos:
 
-Click "Use this template" to create a new repository from this template.
+### 1. Fork the Repository
 
-### 2. Rename the Project
+Click "Fork" on GitHub to create your own copy.
 
-Important: Change `finpilot` to your repository name in these 5 files:
+### 2. Customize Your Image
 
-1. `Containerfile` (line 9): `# Name: your-repo-name`
-2. `Justfile` (line 1): `export image_name := "your-repo-name"`
-3. `README.md` (line 1): `# your-repo-name`
-4. `artifacthub-repo.yml` (line 5): `repositoryID: your-repo-name`
-5. `custom/ujust/README.md` (~line 175): `localhost/your-repo-name:stable`
-
-### 3. Enable GitHub Actions
-
-- Go to the "Actions" tab in your repository
-- Click "I understand my workflows, go ahead and enable them"
-
-Your first build will start automatically! 
-
-Note: Image signing is disabled by default. Your images will build successfully without any signing keys. Once you're ready for production, see "Optional: Enable Image Signing" below.
-
-### 4. Customize Your Image
-
-Choose your base image in `Containerfile` (line 23):
+Choose your base image in `Containerfile` (line 48):
 ```dockerfile
-FROM ghcr.io/ublue-os/bluefin:stable
+FROM ghcr.io/ublue-os/silverblue-main:latest
 ```
 
 Add your packages in `build/10-build.sh`:
@@ -101,25 +82,44 @@ Customize your apps:
 - Add Flatpaks in `custom/flatpaks/` ([guide](custom/flatpaks/README.md))
 - Add ujust commands in `custom/ujust/` ([guide](custom/ujust/README.md))
 
-### 5. Development Workflow
+### 3. Development Workflow
 
 All changes should be made via pull requests:
 
 1. Open a pull request on GitHub with the change you want.
-3. The PR will automatically trigger:
+2. The PR will automatically trigger:
    - Build validation
    - Brewfile, Flatpak, Justfile, and shellcheck validation
    - Test image build
-4. Once checks pass, merge the PR
-5. Merging triggers publishes a `:stable` image
+3. Once checks pass, merge the PR
+4. Merging triggers publishes a `:stable` image
 
-### 6. Deploy Your Image
+### 4. Deploy Your Custom Image
 
 Switch to your image:
 ```bash
 sudo bootc switch ghcr.io/your-username/your-repo-name:stable
 sudo systemctl reboot
 ```
+
+## GitHub Actions Setup
+
+The repository includes automated workflows that need to be enabled:
+
+### Enable GitHub Actions
+
+1. Go to the "Actions" tab in your repository on GitHub
+2. Click "I understand my workflows, go ahead and enable them"
+3. Your first build will start automatically!
+
+### Workflows Included
+
+- **build.yml** - Builds container images on every push to main
+- **clean.yml** - Cleans up old images (90+ days old)
+- **renovate.yml** - Automatically updates dependencies
+- **validate-*.yml** - Validates code quality on pull requests
+
+Note: Image signing is disabled by default. Your images will build successfully without any signing keys. Once you're ready for production, see "Optional: Enable Image Signing" below.
 
 ## Optional: Enable Image Signing
 
