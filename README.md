@@ -112,6 +112,19 @@ The repository includes automated workflows that need to be enabled:
 2. Click "I understand my workflows, go ahead and enable them"
 3. Your first build will start automatically!
 
+### Configure Repository Permissions
+
+For the workflows to run properly, you need to ensure GitHub Actions has the right permissions:
+
+1. Go to your repository Settings
+2. Navigate to **Actions → General**
+3. Scroll down to "Workflow permissions"
+4. Select **"Read and write permissions"**
+5. Check **"Allow GitHub Actions to create and approve pull requests"** (needed for Renovate)
+6. Click "Save"
+
+Without these permissions, the build workflow cannot push images to GitHub Container Registry.
+
 ### Workflows Included
 
 - **build.yml** - Builds container images on every push to main
